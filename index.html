@@ -228,6 +228,31 @@
         color: #f85149; text-align: center;
         padding: 24px 0; font-size: 1rem;
     }
+
+    .disclaimer {
+        margin-top: 30px;
+        background: #161b22;
+        border: 1px solid #30363d;
+        border-radius: 16px;
+        padding: 20px 25px;
+        color: #8b949e;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        text-align: justify;
+    }
+    .disclaimer h3 {
+        color: #ffd200;
+        font-size: 1rem;
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+    .disclaimer b {
+        color: #e6edf3;
+    }
+    .disclaimer .accent {
+        color: #58a6ff;
+    }
+
     .footer {
         margin-top: 20px; text-align: center;
         color: #484f58; font-size: 0.8rem;
@@ -240,6 +265,7 @@
         .input-panel, .result { padding: 15px 12px; }
         .step-row { font-size: 0.85rem; padding: 6px 8px; }
         .step-row .num { min-width: 30px; font-size: 0.7rem; }
+        .disclaimer { padding: 15px 14px; font-size: 0.83rem; }
     }
 </style>
 </head>
@@ -276,6 +302,24 @@
         <div class="result" id="multiResult"></div>
     </div>
 
+    <div class="disclaimer">
+        <h3>📝 О странице</h3>
+        <p>
+            Эта страница была создана для лёгкого и удобного крафта элементов в задании
+            по предмету <b>Химия</b> на осеннем ивенте <span class="accent">«Университет — 2026»</span>
+            на проекте <b>GTA5RP</b>. Был использован файл <b>«720 синтезов.txt»</b>,
+            который был выложен в дискорд-канале <b>Гайдеса Q-D</b>.
+        </p>
+        <p style="margin-top: 10px;">
+            Есть две вкладки: первая предназначена для построения рецепта для одного элемента,
+            вторая — для построения единого дерева крафта для десяти элементов.
+            Во второй вкладке можно ввести любое количество элементов до десяти.
+        </p>
+        <p style="margin-top: 10px; color: #7ee787; font-weight: 600;">
+         Страница также доступна на смартфонах.
+        </p>
+    </div>
+
     <div class="footer">Little Alchemy 2 · рецепты из файла · цели выделены ★</div>
 </div>
 
@@ -284,7 +328,7 @@
 <script>
 // ============================================================
 //  БАЗА РЕЦЕПТОВ
-//  ★ ИСПРАВЛЕНО: Первичный бульон = Лава + Море (вместо Лава + Океан)
+//  ★ Первичный бульон = Лава + Море
 // ============================================================
 const recipes = {
     "Камень": ["Земля","Давление"],
@@ -377,10 +421,7 @@ const recipes = {
     "Зеркало": ["Стекло","Металл"],
     "Оазис": ["Пустыня","Вода"],
     "Океан": ["Море","Море"],
-
-    // ★ ИСПРАВЛЕНО: Первичный бульон = Лава + Море (вместо Лава + Океан)
     "Первичный бульон": ["Лава","Море"],
-
     "Пирамида": ["Пустыня","Камень"],
     "Радуга": ["Вода","Солнце"],
     "Ракета": ["Атмосфера","Металл"],
@@ -1048,9 +1089,7 @@ function getChain(element) {
     return unique;
 }
 
-// ============================================================
-//  Вкладки
-// ============================================================
+// Вкладки
 document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -1060,9 +1099,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 });
 
-// ============================================================
-//  Datalist
-// ============================================================
+// Datalist
 (function fillDatalist() {
     const dl = document.getElementById('elemList');
     const allNames = new Set([...Object.keys(recipes), ...baseElements]);
@@ -1073,9 +1110,7 @@ document.querySelectorAll('.tab').forEach(tab => {
     });
 })();
 
-// ============================================================
-//  10 полей ввода
-// ============================================================
+// 10 полей
 const multiInputsEl = document.getElementById('multiInputs');
 for (let i = 0; i < 10; i++) {
     const inp = document.createElement('input');
@@ -1086,11 +1121,7 @@ for (let i = 0; i < 10; i++) {
     multiInputsEl.appendChild(inp);
 }
 
-// ============================================================
-//  Рендер дерева
-// ============================================================
 function renderTree(container, steps, targets, titleText) {
-    let done = 0;
     const total = steps.length;
 
     const chipsHtml = targets.map((t, idx) => {
@@ -1187,9 +1218,7 @@ function escapeHtml(s) {
 }
 function escapeAttr(s) { return escapeHtml(s); }
 
-// ============================================================
-//  Вкладка 1
-// ============================================================
+// Вкладка 1
 const singleInput = document.getElementById('singleInput');
 const singleBtn = document.getElementById('singleBtn');
 const singleResult = document.getElementById('singleResult');
@@ -1221,9 +1250,7 @@ function doSingleSearch() {
 singleBtn.addEventListener('click', doSingleSearch);
 singleInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSingleSearch(); });
 
-// ============================================================
-//  Вкладка 2
-// ============================================================
+// Вкладка 2
 const multiBtn = document.getElementById('multiBtn');
 const multiClearBtn = document.getElementById('multiClearBtn');
 const multiResult = document.getElementById('multiResult');
